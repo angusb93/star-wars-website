@@ -2,6 +2,7 @@ import React from "react";
 import useSWR from "swr";
 import axios from "axios";
 import Film from "./Film";
+import styles from "../styles/FilmListStyles.module.scss";
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const MovieList = () => {
@@ -14,7 +15,7 @@ const MovieList = () => {
     return <Film key={film.episode_id} film={film} />;
   });
 
-  return <div>{films}</div>;
+  return <div className={styles.filmContainer}>{films}</div>;
 };
 
 export default MovieList;

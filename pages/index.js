@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import FilmList from "../components/FilmList";
+import styles from "../styles/index.module.scss";
 export default function Home() {
   return (
     <div>
@@ -9,8 +10,8 @@ export default function Home() {
         <meta name="description" content="SWAPI website" />
       </Head>
 
-      <main>
-        <h1>Star Wars App</h1>
+      <main className={styles.container}>
+        <h1 className={styles.heading}>Star Wars App</h1>
         <FilmList />
       </main>
     </div>
