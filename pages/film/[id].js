@@ -9,7 +9,7 @@ const Film = (props) => {
     <div>
       <ul>
         {props.data.results.map((post) => (
-          <li>{post.title}</li>
+          <li key={post.episode_id}>{post.title}</li>
         ))}
       </ul>
       <Link href="/">
