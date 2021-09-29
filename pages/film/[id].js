@@ -5,7 +5,6 @@ import styles from "../../styles/pageStyles.module.scss";
 const Film = (props) => {
   const router = useRouter();
   const { id } = router.query;
-  console.log(props.data.results[id]);
 
   // iterate over props.data.results[id] and return a list of items to be displayed
   const film = props.data.results[id];
@@ -18,7 +17,6 @@ const Film = (props) => {
     );
   });
 
-  console.log("this is type of", typeof props.data.results[id]);
   return (
     <div className={styles.container}>
       <h1>{props.data.results[id].title}</h1>
@@ -38,6 +36,11 @@ export async function getStaticPaths() {
   const res = await fetch("https://swapi.dev/api/films/");
   const data = await res.json();
 
+  console.log(
+    "raw",
+    data.results[4].episode_id,
+    typeof data.results[4].episode_id
+  );
   // Get the paths we want to pre-render based on posts
   const paths = data.results.map((film) => ({
     params: { id: film.episode_id.toString() },
@@ -51,7 +54,6 @@ export async function getStaticPaths() {
 export async function getStaticProps() {
   const res = await fetch("https://swapi.dev/api/films/");
   const data = await res.json();
-  // console.log(data);
   return {
     props: {
       data,

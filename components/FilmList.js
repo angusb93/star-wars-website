@@ -4,13 +4,10 @@ import axios from "axios";
 import Film from "./Film";
 
 import styles from "../styles/FilmListStyles.module.scss";
-// const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const MovieList = ({ filmData }) => {
-  // const { data, error } = useSWR("https://swapi.dev/api/films/", fetcher);
-
   const [favorited, setFavorited] = useState({ films: [] });
-  console.log(filmData);
+
   const handleClick = (id) => {
     if (favorited.films.includes(id)) {
       setFavorited({ films: favorited.films.filter((film) => film !== id) });
@@ -20,9 +17,6 @@ const MovieList = ({ filmData }) => {
       });
     }
   };
-  // console.log(data);
-  // console.log(favorited);
-  // if (error) return "An error has occurred.";
   if (!filmData) return "Loading...";
 
   //iterate over the data and return a list of films
