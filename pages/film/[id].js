@@ -6,9 +6,16 @@ const Film = (props) => {
   const { id } = router.query;
 
   return (
-    <ul>
-      <li>{props.data.results[parseInt(id)].title}</li>
-    </ul>
+    <div>
+      <ul>
+        {props.data.results.map((post) => (
+          <li>{post.title}</li>
+        ))}
+      </ul>
+      <Link href="/">
+        <a>Go home</a>
+      </Link>
+    </div>
   );
 };
 
