@@ -8,6 +8,7 @@ const Film = (props) => {
 
   // iterate over props.data.results[id] and return a list of items to be displayed
   const film = props.data.results[id];
+  if (!film) return <p>Film not found</p>;
   const filmItems = Object.keys(film).map((key) => {
     return (
       <div className={styles.filmItem} key={key}>
