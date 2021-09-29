@@ -1,17 +1,29 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
+import styles from "../../styles/pageStyles.module.scss";
 
 const Film = (props) => {
   const router = useRouter();
   const { id } = router.query;
+  console.log(props.data.results[id]);
 
+  // iterate over props.data.results[id] and return a list of items to be displayed
+  const film = props.data.results[id];
+  const filmItems = Object.keys(film).map((key) => {
+    return (
+      <div className={styles.filmItem} key={key}>
+        <h3 className={styles.itemTitle}>{key}</h3>
+        <div className={styles.itemContent}>{film[key]}</div>
+      </div>
+    );
+  });
+
+  console.log("this is type of", typeof props.data.results[id]);
   return (
-    <div>
-      <ul>
-        {props.data.results.map((post) => (
-          <li key={post.episode_id}>{post.title}</li>
-        ))}
-      </ul>
+    <div className={styles.container}>
+      <h1>{props.data.results[id].title}</h1>
+      {/* {JSON.stringify(props.data.results[id], null, 4)}*/}
+      {filmItems}
       <Link href="/">
         <a>Go home</a>
       </Link>

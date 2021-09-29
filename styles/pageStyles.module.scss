@@ -1,0 +1,25 @@
+.container {
+  width: 50%;
+  margin: auto;
+  justify-content: center;
+}
+
+.filmItem {
+  margin: 0rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  flex: auto;
+  border-radius: 10px;
+  box-shadow: -6px -6px 10px 0 #fff, 5px 5px 9px 0 rgb(0 0 0 / 20%);
+}
+.itemTitle {
+  padding-left: 1rem;
+  padding-top: 1rem;
+}
+
+.itemContent {
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
