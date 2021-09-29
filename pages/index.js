@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import FilmList from "../components/FilmList";
 import styles from "../styles/index.module.scss";
-export default function Home() {
+export default function Home(props) {
   return (
     <div>
       <Head>
@@ -12,8 +12,20 @@ export default function Home() {
 
       <main className={styles.container}>
         <h1 className={styles.heading}>Star Wars App</h1>
-        <FilmList />
+        <FilmList filmData={props.data} />
       </main>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const res = await fetch("https://swapi.dev/api/films/");
+  const data = await res.json();
+  console.log(data);
+  return {
+    props: {
+      data,
+    },
+    revalidate: 5000,
+  };
 }
