@@ -21,7 +21,7 @@ const MovieList = () => {
     }
   };
   // console.log(data);
-  console.log(favorited);
+  // console.log(favorited);
   if (error) return "An error has occurred.";
   if (!data) return "Loading...";
 
