@@ -36,8 +36,21 @@ const MovieList = ({ filmData, searchTerm }) => {
     return film.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
+  // orders filteredList based on whether its favorited or not
+  const orderedList = filteredList.sort((a, b) => {
+    if (favorited.films.includes(a.episode_id)) {
+      return -1;
+    } else if (favorited.films.includes(b.episode_id)) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
+  console.log("filtered", filteredList);
+
   //iterate over the data and return a list of films
-  const films = filteredList.map((film) => {
+  const films = orderedList.map((film) => {
     return (
       <Film
         key={film.episode_id}
