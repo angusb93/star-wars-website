@@ -18,4 +18,6 @@ const Film = forwardRef((props, ref) => {
     </div>
   );
 });
+
+Film.displayName = "Film";
 export default Film;
