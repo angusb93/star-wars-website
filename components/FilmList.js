@@ -5,7 +5,7 @@ import Film from "./Film";
 
 import styles from "../styles/FilmListStyles.module.scss";
 
-const MovieList = ({ filmData }) => {
+const MovieList = ({ filmData, searchTerm }) => {
   const [favorited, setFavorited] = useState({ films: [] });
 
   const handleClick = (id) => {
@@ -19,8 +19,15 @@ const MovieList = ({ filmData }) => {
   };
   if (!filmData) return "Loading...";
 
+  // filters list based on searchTerm
+  const filteredList = filmData.results.filter((film) => {
+    return film.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+  console.log("FILTEREDlIST", filteredList);
+  console.log("FILMDATA", filmData);
+
   //iterate over the data and return a list of films
-  const films = filmData.results.map((film) => {
+  const films = filteredList.map((film) => {
     return (
       <Film
         key={film.episode_id}

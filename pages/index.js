@@ -1,5 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
+
+import SearchableFilmList from "../components/SearchableFilmList";
 import FilmList from "../components/FilmList";
 import styles from "../styles/index.module.scss";
 export default function Home(props) {
@@ -12,7 +13,8 @@ export default function Home(props) {
 
       <main className={styles.container}>
         <h1 className={styles.heading}>Star Wars App</h1>
-        <FilmList filmData={props.data} />
+        {/* <FilmList filmData={props.data} /> */}
+        <SearchableFilmList filmData={props.data} />
       </main>
     </div>
   );

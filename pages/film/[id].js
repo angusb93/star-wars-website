@@ -6,15 +6,10 @@ const Film = (props) => {
   const router = useRouter();
   const { id } = router.query;
 
-  // const film = props.data.results[id];
-  // const film = props.data.results.find((film) => {
-  //   id === film.episode_id;
-  // });
   // iterate over props.data.results and return the item with the matching id
   const film = props.data.results.find((film) => {
     return film.episode_id === parseInt(id);
   });
-  console.log("film is ", film);
   if (!film) return <p>Film not found</p>;
   const filmItems = Object.keys(film).map((key) => {
     return (
