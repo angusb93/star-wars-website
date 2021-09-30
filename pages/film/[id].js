@@ -6,8 +6,15 @@ const Film = (props) => {
   const router = useRouter();
   const { id } = router.query;
 
-  // iterate over props.data.results[id] and return a list of items to be displayed
-  const film = props.data.results[id];
+  // const film = props.data.results[id];
+  // const film = props.data.results.find((film) => {
+  //   id === film.episode_id;
+  // });
+  // iterate over props.data.results and return the item with the matching id
+  const film = props.data.results.find((film) => {
+    return film.episode_id === parseInt(id);
+  });
+  console.log("film is ", film);
   if (!film) return <p>Film not found</p>;
   const filmItems = Object.keys(film).map((key) => {
     return (
@@ -20,8 +27,7 @@ const Film = (props) => {
 
   return (
     <div className={styles.container}>
-      <h1>{props.data.results[id].title}</h1>
-      {/* {JSON.stringify(props.data.results[id], null, 4)}*/}
+      <h1>{film.title}</h1>
       {filmItems}
       <Link href="/">
         <a>Go home</a>
