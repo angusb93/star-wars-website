@@ -5,19 +5,33 @@ import styles from "../styles/FilmListStyles.module.scss";
 
 const MovieList = ({ filmData, searchTerm }) => {
   // const [favorited, setFavorited] = useState({ films: [] });
-  // useState with function to check if there is local storage for films and use that if there is. also check if the file is running on the server
+
+  // use state for getting favorited films from local storage
+
   const [favorited, setFavorited] = useState(() => {
     if (typeof window !== "undefined") {
-      const localStorageFilms = JSON.parse(localStorage.getItem("films"));
-      return localStorageFilms ? localStorageFilms : { films: [] };
+      const localStorageFilms = JSON.parse(
+        localStorage.getItem("favorited")
+      ) || { films: [] };
+      console.log("local storage films", localStorageFilms);
+      return localStorageFilms;
     } else {
       return { films: [] };
     }
   });
 
+  // update favorited from local storage when rendered to trigger re render
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setFavorited(JSON.parse(localStorage.getItem("favorited")));
+    }
+  }, []);
+
   //store films in local storage to be read later
   useEffect(() => {
-    localStorage.setItem("favorited", JSON.stringify(favorited));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("favorited", JSON.stringify(favorited));
+    }
   }, [favorited]);
 
   const handleClick = (id) => {
@@ -35,8 +49,6 @@ const MovieList = ({ filmData, searchTerm }) => {
   const filteredList = filmData.results.filter((film) => {
     return film.title.toLowerCase().includes(searchTerm.toLowerCase());
   });
-  console.log("FILTEREDlIST", filteredList);
-  console.log("FILMDATA", filmData);
 
   //iterate over the data and return a list of films
   const films = filteredList.map((film) => {
