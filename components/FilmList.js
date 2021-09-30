@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Film from "./Film";
-
+import FlipMove from "react-flip-move";
 import styles from "../styles/FilmListStyles.module.scss";
 
 const MovieList = ({ filmData, searchTerm }) => {
@@ -61,7 +61,11 @@ const MovieList = ({ filmData, searchTerm }) => {
     );
   });
 
-  return <div className={styles.filmContainer}>{films}</div>;
+  return (
+    <div className={styles.filmContainer}>
+      <FlipMove>{films}</FlipMove>
+    </div>
+  );
 };
 
 export default MovieList;

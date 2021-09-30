@@ -11,7 +11,8 @@ const Film = (props) => {
     return film.episode_id === parseInt(id);
   });
   if (!film) return <p>Film not found</p>;
-  console.log(film);
+  // console.log(film);
+
   const filmItems = Object.keys(film).map((key) => {
     return (
       <div className={styles.filmItem} key={key}>

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import styles from "../styles/FilmStyles.module.scss";
 import Star from "./Star";
 import Link from "next/link";
 
-export default function Film(props) {
+const Film = forwardRef((props, ref) => {
   return (
-    <div className={styles.filmCard}>
+    <div className={styles.filmCard} ref={ref}>
       <div className={styles.filmTitle}>
         {props.film.title}
         <Link href={`/film/${parseInt(props.film.episode_id)}`}>
@@ -17,4 +17,5 @@ export default function Film(props) {
       </div>
     </div>
   );
-}
+});
+export default Film;
