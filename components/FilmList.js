@@ -6,18 +6,19 @@ import styles from "../styles/FilmListStyles.module.scss";
 const MovieList = ({ filmData, searchTerm }) => {
   const [favorited, setFavorited] = useState({ films: [] });
 
+  // update favorited from local storage when rendered to trigger re render
+  useEffect(() => {
+    if (typeof window !== "undefined" && localStorage.getItem("favorited")) {
+      setFavorited(JSON.parse(localStorage.getItem("favorited")));
+    }
+  }, []);
+
   //store films in local storage to be read later
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("favorited", JSON.stringify(favorited));
     }
   }, [favorited]);
-  // update favorited from local storage when rendered to trigger re render
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setFavorited(JSON.parse(localStorage.getItem("favorited")));
-    }
-  }, []);
 
   const handleClick = (id) => {
     if (favorited.films.includes(id)) {
@@ -37,7 +38,7 @@ const MovieList = ({ filmData, searchTerm }) => {
 
   // orders filteredList based on whether its favorited or not
   const orderedList = filteredList.sort((a, b) => {
-    if (favorited && favorited.films.includes(a.episode_id)) {
+    if (favorited.films.includes(a.episode_id)) {
       return -1;
     } else if (favorited.films.includes(b.episode_id)) {
       return 1;
