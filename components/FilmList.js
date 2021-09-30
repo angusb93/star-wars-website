@@ -1,12 +1,24 @@
-import { React, useState } from "react";
-import useSWR from "swr";
-import axios from "axios";
+import { React, useState, useEffect } from "react";
 import Film from "./Film";
 
 import styles from "../styles/FilmListStyles.module.scss";
 
 const MovieList = ({ filmData, searchTerm }) => {
-  const [favorited, setFavorited] = useState({ films: [] });
+  // const [favorited, setFavorited] = useState({ films: [] });
+  // useState with function to check if there is local storage for films and use that if there is. also check if the file is running on the server
+  const [favorited, setFavorited] = useState(() => {
+    if (typeof window !== "undefined") {
+      const localStorageFilms = JSON.parse(localStorage.getItem("films"));
+      return localStorageFilms ? localStorageFilms : { films: [] };
+    } else {
+      return { films: [] };
+    }
+  });
+
+  //store films in local storage to be read later
+  useEffect(() => {
+    localStorage.setItem("favorited", JSON.stringify(favorited));
+  }, [favorited]);
 
   const handleClick = (id) => {
     if (favorited.films.includes(id)) {
