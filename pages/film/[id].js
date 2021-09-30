@@ -11,10 +11,11 @@ const Film = (props) => {
     return film.episode_id === parseInt(id);
   });
   if (!film) return <p>Film not found</p>;
+  console.log(film);
   const filmItems = Object.keys(film).map((key) => {
     return (
       <div className={styles.filmItem} key={key}>
-        <h3 className={styles.itemTitle}>{key}</h3>
+        <h3 className={styles.itemTitle}>{key.replace("_", " ")}</h3>
         <div className={styles.itemContent}>{film[key]}</div>
       </div>
     );
@@ -25,7 +26,7 @@ const Film = (props) => {
       <h1>{film.title}</h1>
       {filmItems}
       <Link href="/">
-        <a>Go home</a>
+        <a className={styles.goBack}>Go home</a>
       </Link>
     </div>
   );
