@@ -3,6 +3,7 @@ import Head from "next/head";
 import SearchableFilmList from "../components/SearchableFilmList";
 import styles from "../styles/index.module.scss";
 export default function Home(props) {
+  // console.log(props.data);
   return (
     <div>
       <Head>

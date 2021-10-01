@@ -10,8 +10,11 @@ const Film = (props) => {
   const film = props.data.results.find((film) => {
     return film.episode_id === parseInt(id);
   });
+
   if (!film) return <p>Film not found</p>;
-  // console.log(film);
+  if (typeof window !== "undefined") {
+    console.log(props.data.results);
+  }
 
   const filmItems = Object.keys(film).map((key) => {
     return (
@@ -40,11 +43,6 @@ export async function getStaticPaths() {
   const res = await fetch("https://swapi.dev/api/films/");
   const data = await res.json();
 
-  console.log(
-    "raw",
-    data.results[4].episode_id,
-    typeof data.results[4].episode_id
-  );
   // Get the paths we want to pre-render based on posts
   const paths = data.results.map((film) => ({
     params: { id: film.episode_id.toString() },
@@ -58,6 +56,39 @@ export async function getStaticPaths() {
 export async function getStaticProps() {
   const res = await fetch("https://swapi.dev/api/films/");
   const data = await res.json();
+
+  // const newData = data.results.map((films) => {
+  //   films.characters.map(async (characterURL) => {
+  //     const characterNameRes = await fetch(characterURL);
+  //     const characterName = await characterNameRes.json();
+  //     console.log(characterName.name);
+  //     return characterName.name;
+  //   });
+  // });
+
+  async function getCharacterNames(characterURL) {
+    const characterNameRes = await fetch(characterURL);
+    const characterName = await characterNameRes.json();
+    return characterName.name;
+  }
+  for (let [index, characterURL] of data.results[0].characters.entries()) {
+    const characterName = await getCharacterNames(characterURL);
+    // characterURL = "fu";
+    data.results[0].characters[index] = characterName;
+    console.log(characterName);
+  }
+  // await Promise.all(
+  //   data.results[0].characters.map(async (characterURL) => {
+  //     return await getCharacterNames(characterURL);
+  //   })
+  // );
+  console.log(data.results[0].characters);
+  // const character = await fetch(data.results[0].characters[0]);
+  // const characterData = await character.json();
+  // // console.log(characterData);
+
+  // data.results[0].characters[0] = characterData.name;
+
   return {
     props: {
       data,
