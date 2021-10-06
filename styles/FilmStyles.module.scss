@@ -10,6 +10,12 @@
   width: 100%;
   border-radius: 10px;
   box-shadow: -6px -6px 10px 0 #fff, 5px 5px 9px 0 rgb(0 0 0 / 20%);
+  transition: all 200ms ease-in-out;
+}
+.filmCard:hover {
+  box-shadow: -10px -10px 14px 0 #fff, 9px 9px 13px 0 rgb(0 0 0 / 20%);
+  transition: all 200ms ease-in-out;
+  transform: scale(1.02);
 }
 .filmTitle {
   padding-left: 1rem;
