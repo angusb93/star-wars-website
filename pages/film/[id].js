@@ -65,15 +65,6 @@ export async function getStaticProps() {
   const res = await fetch("https://swapi.dev/api/films/");
   const data = await res.json();
 
-  // const newData = data.results.map((films) => {
-  //   films.characters.map(async (characterURL) => {
-  //     const characterNameRes = await fetch(characterURL);
-  //     const characterName = await characterNameRes.json();
-  //     console.log(characterName.name);
-  //     return characterName.name;
-  //   });
-  // });
-
   async function getItemNames(characterURL) {
     const characterNameRes = await fetch(characterURL);
     const characterName = await characterNameRes.json();
@@ -82,7 +73,8 @@ export async function getStaticProps() {
 
   for (let [index, film] of data.results.entries()) {
     for (let filmItem of Object.keys(film)) {
-      if (Array.isArray(film[filmItem])) {
+      // if (Array.isArray(film[filmItem])) {
+      if (filmItem === "species") {
         for (let itemURL of film[filmItem]) {
           const itemName = await getItemNames(itemURL);
           data.results[index][filmItem][
@@ -92,18 +84,6 @@ export async function getStaticProps() {
       }
     }
   }
-  // for (let [index, characterURL] of data.results[0].characters.entries()) {
-  //   const characterName = await getItemNames(characterURL);
-  //   data.results[0].characters[index] = characterName;
-  //   console.log(characterName);
-  // }
-
-  // console.log(data.results[0].characters);
-  // const character = await fetch(data.results[0].characters[0]);
-  // const characterData = await character.json();
-  // // console.log(characterData);
-
-  // data.results[0].characters[0] = characterData.name;
 
   return {
     props: {
