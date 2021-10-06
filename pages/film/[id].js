@@ -73,8 +73,8 @@ export async function getStaticProps() {
 
   for (let [index, film] of data.results.entries()) {
     for (let filmItem of Object.keys(film)) {
-      // if (Array.isArray(film[filmItem])) {
-      if (filmItem === "species") {
+      if (Array.isArray(film[filmItem])) {
+        // if (filmItem === "species") {
         for (let itemURL of film[filmItem]) {
           const itemName = await getItemNames(itemURL);
           data.results[index][filmItem][
