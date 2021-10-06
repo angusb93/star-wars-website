@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
 import styles from "../../styles/pageStyles.module.scss";
-
+import ReactTooltip from "react-tooltip";
 const Film = (props) => {
   const router = useRouter();
   const { id } = router.query;
@@ -19,11 +19,25 @@ const Film = (props) => {
   const filmItems = Object.keys(film).map((key) => {
     return (
       <div className={styles.filmItem} key={key}>
+        <ReactTooltip
+          multiline={true}
+          backgroundColor="white"
+          textColor="black"
+        />
         <h3 className={styles.itemTitle}>{key.replace("_", " ")}</h3>
         {Array.isArray(film[key]) ? (
           <ul className={styles.itemContent}>
             {film[key].map((item, index) => (
-              <li key={index}>{item}</li>
+              <li
+                key={index}
+                data-tip={
+                  key === "characters"
+                    ? `Height is: ${item.height} <br/> Weight is: ${item.mass} <br/> Hair Color is: ${item.hair_color} <br/> Eye color is: ${item.eye_color})`
+                    : undefined
+                }
+              >
+                {item.name}{" "}
+              </li>
             ))}
           </ul>
         ) : (
@@ -65,21 +79,21 @@ export async function getStaticProps() {
   const res = await fetch("https://swapi.dev/api/films/");
   const data = await res.json();
 
-  async function getItemNames(characterURL) {
-    const characterNameRes = await fetch(characterURL);
-    const characterName = await characterNameRes.json();
-    return characterName.name;
+  async function getItemNames(itemURL) {
+    const itemNameRes = await fetch(itemURL);
+    const itemName = await itemNameRes.json();
+    return itemName;
   }
 
   for (let [index, film] of data.results.entries()) {
     for (let filmItem of Object.keys(film)) {
       if (Array.isArray(film[filmItem])) {
-        // if (filmItem === "species") {
+        // if (filmItem === "characters") {
         for (let itemURL of film[filmItem]) {
           const itemName = await getItemNames(itemURL);
           data.results[index][filmItem][
             data.results[index][filmItem].indexOf(itemURL)
-          ] = itemName;
+          ] = { ...itemName };
         }
       }
     }
