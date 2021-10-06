@@ -3,7 +3,6 @@ import Head from "next/head";
 import SearchableFilmList from "../components/SearchableFilmList";
 import styles from "../styles/index.module.scss";
 export default function Home(props) {
-  // console.log(props.data);
   return (
     <div>
       <Head>
@@ -20,6 +19,7 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
+  // gets data to be passed in as props to the page
   const res = await fetch("https://swapi.dev/api/films/");
   const data = await res.json();
   return {

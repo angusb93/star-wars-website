@@ -3,6 +3,7 @@ import styles from "../styles/FilmStyles.module.scss";
 import Star from "./Star";
 import Link from "next/link";
 
+//foward ref is needed for the react-flip-move library
 const Film = forwardRef((props, ref) => {
   return (
     <div className={styles.filmCard} ref={ref}>

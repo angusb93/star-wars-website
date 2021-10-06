@@ -6,20 +6,21 @@ import styles from "../styles/FilmListStyles.module.scss";
 const MovieList = ({ filmData, searchTerm }) => {
   const [favorited, setFavorited] = useState({ films: [] });
 
-  // update favorited from local storage when rendered to trigger re render
+  // update favorited from local storage when rendered to trigger re render. checks if client side first
   useEffect(() => {
     if (typeof window !== "undefined" && localStorage.getItem("favorited")) {
       setFavorited(JSON.parse(localStorage.getItem("favorited")));
     }
   }, []);
 
-  //store films in local storage to be read later
+  //store films in local storage to be read later. checks if client side first
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("favorited", JSON.stringify(favorited));
     }
   }, [favorited]);
 
+  // when film is favorited, add to favorited state
   const handleClick = (id) => {
     if (favorited.films.includes(id)) {
       setFavorited({ films: favorited.films.filter((film) => film !== id) });
