@@ -20,7 +20,15 @@ const Film = (props) => {
     return (
       <div className={styles.filmItem} key={key}>
         <h3 className={styles.itemTitle}>{key.replace("_", " ")}</h3>
-        <div className={styles.itemContent}>{film[key]}</div>
+        {Array.isArray(film[key]) ? (
+          <ul className={styles.itemContent}>
+            {film[key].map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        ) : (
+          <div className={styles.itemContent}>{film[key]}</div>
+        )}
       </div>
     );
   });
@@ -66,23 +74,31 @@ export async function getStaticProps() {
   //   });
   // });
 
-  async function getCharacterNames(characterURL) {
+  async function getItemNames(characterURL) {
     const characterNameRes = await fetch(characterURL);
     const characterName = await characterNameRes.json();
     return characterName.name;
   }
-  for (let [index, characterURL] of data.results[0].characters.entries()) {
-    const characterName = await getCharacterNames(characterURL);
-    // characterURL = "fu";
-    data.results[0].characters[index] = characterName;
-    console.log(characterName);
+
+  for (let [index, film] of data.results.entries()) {
+    for (let filmItem of Object.keys(film)) {
+      if (Array.isArray(film[filmItem])) {
+        for (let itemURL of film[filmItem]) {
+          const itemName = await getItemNames(itemURL);
+          data.results[index][filmItem][
+            data.results[index][filmItem].indexOf(itemURL)
+          ] = itemName;
+        }
+      }
+    }
   }
-  // await Promise.all(
-  //   data.results[0].characters.map(async (characterURL) => {
-  //     return await getCharacterNames(characterURL);
-  //   })
-  // );
-  console.log(data.results[0].characters);
+  // for (let [index, characterURL] of data.results[0].characters.entries()) {
+  //   const characterName = await getItemNames(characterURL);
+  //   data.results[0].characters[index] = characterName;
+  //   console.log(characterName);
+  // }
+
+  // console.log(data.results[0].characters);
   // const character = await fetch(data.results[0].characters[0]);
   // const characterData = await character.json();
   // // console.log(characterData);
@@ -93,6 +109,6 @@ export async function getStaticProps() {
     props: {
       data,
     },
-    revalidate: 5000,
+    revalidate: 10000,
   };
 }
