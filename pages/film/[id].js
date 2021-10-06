@@ -94,8 +94,8 @@ export async function getStaticProps() {
   // essentially "filling out" the data with the responses instead of the URLs
   for (let [index, film] of data.results.entries()) {
     for (let filmItem of Object.keys(film)) {
-      if (Array.isArray(film[filmItem])) {
-        // if (filmItem === "characters") {
+      // if (Array.isArray(film[filmItem])) {
+      if (filmItem === "characters") {
         for (let itemURL of film[filmItem]) {
           const itemName = await getItemNames(itemURL);
           data.results[index][filmItem][

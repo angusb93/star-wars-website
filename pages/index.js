@@ -1,5 +1,6 @@
 import Head from "next/head";
-
+import StarWars from "../public/Star_Wars.svg";
+import Image from "next/image";
 import SearchableFilmList from "../components/SearchableFilmList";
 import styles from "../styles/index.module.scss";
 export default function Home(props) {
@@ -11,7 +12,10 @@ export default function Home(props) {
       </Head>
 
       <main className={styles.container}>
-        <h1 className={styles.heading}>Star Wars App</h1>
+        <h1 className={styles.heading}>
+          <Image src={StarWars} alt="" />
+        </h1>
+
         <SearchableFilmList filmData={props.data} />
       </main>
     </div>
