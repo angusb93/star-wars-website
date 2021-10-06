@@ -12,9 +12,9 @@ const Film = (props) => {
   });
 
   if (!film) return <p>Film not found</p>;
-  if (typeof window !== "undefined") {
-    console.log(props.data.results);
-  }
+  // if (typeof window !== "undefined") {
+  //   console.log(props.data.results);
+  // }
 
   const filmItems = Object.keys(film).map((key) => {
     return (
@@ -32,7 +32,11 @@ const Film = (props) => {
                 key={index}
                 data-tip={
                   key === "characters"
-                    ? `Height is: ${item.height} <br/> Weight is: ${item.mass} <br/> Hair Color is: ${item.hair_color} <br/> Eye color is: ${item.eye_color})`
+                    ? `${item.name} <br/>
+                    Height is: ${item.height} <br/> 
+                    Weight is: ${item.mass} <br/> 
+                    Hair Color is: ${item.hair_color} <br/> 
+                    Eye color is: ${item.eye_color}`
                     : undefined
                 }
               >
@@ -88,8 +92,8 @@ export async function getStaticProps() {
   for (let [index, film] of data.results.entries()) {
     for (let filmItem of Object.keys(film)) {
       if (Array.isArray(film[filmItem])) {
-        // if (filmItem === "characters") {
-        for (let itemURL of film[filmItem]) {
+        if (filmItem === "characters") {
+          // for (let itemURL of film[filmItem]) {
           const itemName = await getItemNames(itemURL);
           data.results[index][filmItem][
             data.results[index][filmItem].indexOf(itemURL)
