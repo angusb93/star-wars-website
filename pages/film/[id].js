@@ -32,8 +32,8 @@ const Film = (props) => {
                 data-tip={
                   key === "characters"
                     ? `${item.name} <br/>
-                    Height is: ${item.height} <br/> 
-                    Weight is: ${item.mass} <br/> 
+                    Height is: ${item.height}cm <br/> 
+                    Weight is: ${item.mass}kg <br/> 
                     Hair Color is: ${item.hair_color} <br/> 
                     Eye color is: ${item.eye_color}`
                     : undefined
